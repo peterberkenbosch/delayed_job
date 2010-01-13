@@ -212,12 +212,14 @@ describe Delayed::Job do
     end
   end
   
-  context "when payload object has a job attr_accessor, it" do
+  context "when payload object has a job as perform attribute, it" do
 
     it "should set self as job member variable of the payload object" do
+      
       simple_param_job = SimpleParamJob.new
       job = Delayed::Job.enqueue simple_param_job
-      simple_param_job.job.should == job
+      job.invoke_job
+      job.payload_object.job.should == job
     end
 
   end

@@ -23,5 +23,10 @@ end
 class SimpleParamJob
   attr_accessor :job
   cattr_accessor :runs; self.runs = 0
-  def perform; @@runs += 1; end
+  
+  def perform(job)
+    self.job = job
+    @@runs += 1
+  end
+  
 end

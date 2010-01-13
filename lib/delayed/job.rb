@@ -56,7 +56,7 @@ module Delayed
     
       priority = args.first || 0
       run_at   = args[1]
-
+      
       Job.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at)
     end
 
@@ -100,7 +100,11 @@ module Delayed
 
     # Moved into its own method so that new_relic can trace it.
     def invoke_job
-      payload_object.perform
+      begin
+        payload_object.perform(self)
+      rescue ArgumentError
+        payload_object.perform
+      end
     end
 
   private
