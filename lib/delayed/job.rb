@@ -29,7 +29,6 @@ module Delayed
 
     def payload_object
       @payload_object ||= deserialize(self['handler'])
-      object.job = self if object.respond_to?(:job)
     end
 
     def name
@@ -45,6 +44,7 @@ module Delayed
 
     def payload_object=(object)
       self['handler'] = object.to_yaml
+      object.job = self if object.respond_to?(:job)
     end
 
     # Add a job to the queue
