@@ -29,6 +29,7 @@ module Delayed
 
     def payload_object
       @payload_object ||= deserialize(self['handler'])
+      object.job = self if object.respond_to?(:job)
     end
 
     def name

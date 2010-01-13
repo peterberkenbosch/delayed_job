@@ -19,3 +19,9 @@ module M
   end
   
 end
+
+class SimpleParamJob
+  attr_accessor :job
+  cattr_accessor :runs; self.runs = 0
+  def perform; @@runs += 1; end
+end
